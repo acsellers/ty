@@ -1,0 +1,56 @@
+Missing Functions
+CycleEach(f, xs, int) Call f on xs int times in succession
+CycleMap(f, xs, int) Call f on xs int times in succession and return the results
+CycleFor(f, xs) Class f on xs forever
+Drop(f, xs) Call f on xs until it returns true, then return the rest of xs
+ParEach(f, xs) Call f on each element of xs in parallel
+ParEachSlice(f, xs, n) Call f on each element of xs with n parallel goroutines
+EachCons(f, xs, n) Call f with n elements of xs
+FindIndex(f, xs) Return the first index where f returns true, otherwise nil
+Grep(xs, regex) Returns the strings for which regex matches
+GroupBy(f, xs) Returns a mapping from return value of f to array of elements that were put in
+Include(x, xs) Returns whether x is in xs
+MaxInt(f, xs) Returns the max integer which resulted from running f on an element of xs
+MaxFloat(f, xs) Returns the max float which resulted from running f on an element of xs
+MinInt(f, xs) Returns the min integer which resulted from running f on an element of xs
+MinFloat(f, xs) Returns the min float which resulted from running f on an element of xs
+MinMaxInt(f, xs) Returns the minimum and maximum integers from running f on an element of xs
+MinMaxFloat(f, xs) Returns the minimum and maximum integers from running f on an element of xs
+None(f, xs) Returns whether none of the elements in xs caused f to return true
+One(f, xs) Returns whether exactly one of the elements in xs caused f to return true
+Partition(f, xs) Returns two arrays, the first of which is where f returned true and the second where f returned false
+SumInt(f, xs) Returns the sum of running f on xs as an integer
+SumFloat(f, xs) Returns the sum of running f on xs as a float
+Take(f, xs) Retuns a all the elements of xs until f returns true
+Zip(A, B) Returns the result of interleaving A and B into a list
+Choice(xs) Returns a random element of xs
+Combination(xs, n) Returns all unique combinations of elements of xs with n elements
+Permutations(xs, n) Returns all unique ordering of combinations of elements of xs with n elements
+Compact(xs) Returns all elemenets of xs that aren't nil
+Delete(xs, x) Returns xs missing the all instances of x
+Flatten(xxs) Concats each array in xxs into a single array, like Concat for >2 arrays
+Replace(xs, ys) Replaces elements in xs with elements from ys until ys is empty or xs has been fully replaced
+Join(xs, s) Joins elements of xs by calling either calling String() or joining strings or calling fmt.Sprint
+
+Intentionally Missing Functions
+Drop(f, int) Drop first int elements from f - use slicing
+EachWithIndex(f, xs) Call each f with the element and index - use range function
+ToA(xs) Return a slice of xs, we don't have sparse ranges
+FindAll(f, xs) Use Filter - no synonyms
+First(xs) Returns the first element - use xs[0]
+Inject(f, xs) Use Reduce - no synonyms
+Collect(f, xs) Use Map - no synonyms
+SortBy(f, xs) Use Sort - go doesn't have a generic sort
+Take(xs, n) Get first n elements from xs - use slicing
+TakeWhile(f, xs) Renamed to Take, since we weren't using it
+ToSet(xs) Use Set - no synonyms
+Exclude(x, xs) Use !Include - too similar
+Many(xs) Use len(xs) > 1
+DeleteIf(xs, f) Use Filter - not touching your slices
+DeleteAt(xs, n) Use del(xs, n)
+NItems(xs) Returns non-nil length of xs - maybe later
+
+More Intentionally Missing Functions that would best belong in a more specific library
+Abbrev(xs) Returns all shortening of elements of xs for which another element could not be similarly shortened
+Assoc(xs, x) Returns the array contained in xs that starts with x
+RAssoc(xs, x) Returns the array contained in xs that ends with x
