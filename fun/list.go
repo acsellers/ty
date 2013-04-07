@@ -255,3 +255,30 @@ func Each(f, xs interface{}) {
 		call(vf, vxs.Index(i))
 	}
 }
+
+// Zip has the parametric type
+//
+//  func Zip(xs , ys []A) []A
+//
+// Zip puts the arrays xs and ys together interleaved until the shorter one runs out
+func Zip(xs, ys interface{}) interface{} {
+	chk := ty.Check(
+		new(func([]ty.A, []ty.A) []ty.A),
+		xs, ys)
+	vxs, vys, vzs := chk.Args[0], chk.Args[1], chk.Returns[0]
+
+	xsLen := vxs.Len()
+	ysLen := vys.Len()
+	xysLen := xsLen
+	if xsLen > ysLen {
+		xysLen = ysLen
+	}
+
+	zs := reflect.MakeSlice(vzs, xysLen*2, xysLen*2)
+	for i := 0; i < xysLen; i++ {
+		zs.Index(i * 2).Set(vxs.Index(i))
+		zs.Index(i*2 + 1).Set(vys.Index(i))
+	}
+
+	return zs.Interface()
+}

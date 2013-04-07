@@ -6,8 +6,8 @@ CycleEach(f, xs, int) Call f on xs int times in succession
 CycleMap(f, xs, int) Call f on xs int times in succession and return the results
 CycleFor(f, xs) Class f on xs forever
 Drop(f, xs) Call f on xs until it returns true, then return the rest of xs
+EachSlice(f, xs, n) Call f with n elements of xs
 ParEachSlice(f, xs, n) Call f on each element of xs with n parallel goroutines
-EachCons(f, xs, n) Call f with n elements of xs
 FindIndex(f, xs) Return the first index where f returns true, otherwise nil
 Grep(xs, regex) Returns the strings for which regex matches
 GroupBy(f, xs) Returns a mapping from return value of f to array of elements that were put in
@@ -17,11 +17,10 @@ One(f, xs) Returns whether exactly one of the elements in xs caused f to return 
 Partition(f, xs) Returns two arrays, the first of which is where f returned true and the second where f returned false
 Take(f, xs) Retuns a all the elements of xs until f returns true
 Zip(A, B) Returns the result of interleaving A and B into a list
-Choice(xs) Returns a random element of xs
 Combination(xs, n) Returns all unique combinations of elements of xs with n elements
 Permutations(xs, n) Returns all unique ordering of combinations of elements of xs with n elements
 Compact(xs) Returns all elemenets of xs that aren't nil
-Delete(xs, x) Returns xs missing the all instances of x
+Delete(xs, x) Returns xs missing the nil instances of x
 Flatten(xxs) Concats each array in xxs into a single array, like Concat for >2 arrays
 Replace(xs, ys) Replaces elements in xs with elements from ys until ys is empty or xs has been fully replaced
 Join(xs, s) Joins elements of xs by calling either calling String() or joining strings or calling fmt.Sprint
@@ -48,3 +47,6 @@ More Intentionally Missing Functions that would best belong in a more specific l
 Abbrev(xs) Returns all shortening of elements of xs for which another element could not be similarly shortened
 Assoc(xs, x) Returns the array contained in xs that starts with x
 RAssoc(xs, x) Returns the array contained in xs that ends with x
+
+Unsure Missing Functions
+Choice(xs, r) Returns a random element of xs according to rand

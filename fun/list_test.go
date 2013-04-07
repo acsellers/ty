@@ -73,6 +73,23 @@ func TestReverse(t *testing.T) {
 	assertDeep(t, reversed, []int{5, 4, 3, 2, 1})
 }
 
+func TestZip(t *testing.T) {
+	a := []int{1, 3, 5}
+	b := []int{2, 4, 6}
+	zipped := Zip(a, b)
+	assertDeep(t, zipped, []int{1, 2, 3, 4, 5, 6})
+
+	c := []int{1, 2, 3}
+	d := []int{}
+	zipped = Zip(c, d)
+	assertDeep(t, zipped, []int{})
+
+	e := []string{"a", "b", "c", "d"}
+	f := []string{"1", "2"}
+	zipped = Zip(e, f)
+	assertDeep(t, zipped, []string{"a", "1", "b", "2"})
+}
+
 func TestCopy(t *testing.T) {
 	orig := []int{1, 2, 3, 4, 5}
 	copied := Copy(orig).([]int)
