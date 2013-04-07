@@ -43,3 +43,45 @@ func Any(f, xs interface{}) bool {
 	}
 	return false
 }
+
+// Count has a parametric type:
+//
+//  func Count(f func(A) bool, xs []A) int
+//
+// Count returns the number of elements of xs for which f
+// returns true
+func Count(f, xs interface{}) (matches int) {
+	chk := ty.Check(
+		new(func(func(ty.A) bool, []ty.A)),
+		f, xs)
+	vp, vxs := chk.Args[0], chk.Args[1]
+
+	xsLen := vxs.Len()
+	for i := 0; i < xsLen; i++ {
+		if call1(vp, vxs.Index(i)).Bool() {
+			matches++
+		}
+	}
+	return
+}
+
+// Detect has a parametric type:
+//
+//  func Detect(f func(A) bool, xs []A) A
+//
+// Detect returns the first element for which f returns
+// true, if none are returned it returns nil
+func Detect(f, xs interface{}) interface{} {
+	chk := ty.Check(
+		new(func(func(ty.A) bool, []ty.A)),
+		f, xs)
+	vp, vxs := chk.Args[0], chk.Args[1]
+
+	xsLen := vxs.Len()
+	for i := 0; i < xsLen; i++ {
+		if call1(vp, vxs.Index(i)).Bool() {
+			return vxs.Index(i).Interface()
+		}
+	}
+	return nil
+}

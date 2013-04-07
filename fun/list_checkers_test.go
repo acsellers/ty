@@ -25,3 +25,21 @@ func TestAny(t *testing.T) {
 	greater := Any(greaterThanTen, []int{1, 2, 3, 4, 5})
 	assertDeep(t, greater, false)
 }
+
+func TestCount(t *testing.T) {
+	even := func(x int) bool { return x%2 == 0 }
+	countEven := Count(even, []int{1, 2, 3, 4, 5, 6})
+	assertDeep(t, countEven, 3)
+
+	countEven = Count(even, []int{})
+	assertDeep(t, countEven, 0)
+}
+
+func TestDetect(t *testing.T) {
+	even := func(x int) bool { return x%2 == 0 }
+	firstEven := Detect(even, []int{1, 2, 3, 4, 5, 6})
+	assertDeep(t, firstEven.(int), 2)
+
+	firstEven = Detect(even, []int{})
+	assertDeep(t, firstEven, nil)
+}
