@@ -43,3 +43,15 @@ func TestDetect(t *testing.T) {
 	firstEven = Detect(even, []int{})
 	assertDeep(t, firstEven, nil)
 }
+
+func TestNone(t *testing.T) {
+	even := func(x int) bool { return x%2 == 0 }
+	none := None(even, []int{1, 2, 3})
+	assertDeep(t, none, false)
+
+	none = None(even, []int{1, 3, 5})
+	assertDeep(t, none, true)
+
+	none = None(even, []int{})
+	assertDeep(t, none, true)
+}
