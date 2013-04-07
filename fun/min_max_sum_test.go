@@ -91,3 +91,29 @@ func TestMinMaxFloat(t *testing.T) {
 		t.Fatal("TestMinMaxFloat: 0 should be returned from 0 length array")
 	}
 }
+
+func TestSumInt(t *testing.T) {
+	square := func(x int64) int64 { return x * x }
+	sum := SumInt(square, []int64{1, 2, 3})
+	if sum != 14 {
+		t.Fatalf("TestSumInt: 14 should be the sum of the values, was %v", sum)
+	}
+
+	sum = SumInt(square, []int64{})
+	if sum != 0 {
+		t.Fatalf("TestSumInt: 0 should be the sum of no values, was %v", sum)
+	}
+}
+
+func TestSumFloat(t *testing.T) {
+	square := func(x float64) float64 { return x * x }
+	sum := SumFloat(square, []float64{1, 2, 3})
+	if sum != 14 {
+		t.Fatalf("TestSumFloat: 14 should be the sum of the values, was %v", sum)
+	}
+
+	sum = SumFloat(square, []float64{})
+	if sum != 0 {
+		t.Fatalf("TestSumFloat: 0 should be the sum of no values, was %v", sum)
+	}
+}

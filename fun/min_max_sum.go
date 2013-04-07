@@ -174,3 +174,45 @@ func MinMaxFloat(f, xs interface{}) (float64, float64) {
 
 	return 0.0, 0.0
 }
+
+// SumInt has a parametric type:
+//
+//  func SumInt(f func(A) int64, xs []A) int64
+//
+// SumInt returns the sum of the values returned from f
+func SumInt(f, xs interface{}) int64 {
+	chk := ty.Check(
+		new(func(func(ty.A) int64, []ty.A)),
+		f, xs)
+	vp, vxs := chk.Args[0], chk.Args[1]
+
+	xsLen := vxs.Len()
+	var sum int64
+	for i := 0; i < xsLen; i++ {
+		vx := vxs.Index(i)
+		sum += call1(vp, vx).Int()
+	}
+
+	return sum
+}
+
+// SumFloat has a parametric type:
+//
+//  func SumFloat(f func(A) float64, xs []A) float64
+//
+// SumFloat returns the sum of the values returned from f
+func SumFloat(f, xs interface{}) float64 {
+	chk := ty.Check(
+		new(func(func(ty.A) float64, []ty.A)),
+		f, xs)
+	vp, vxs := chk.Args[0], chk.Args[1]
+
+	xsLen := vxs.Len()
+	var sum float64
+	for i := 0; i < xsLen; i++ {
+		vx := vxs.Index(i)
+		sum += call1(vp, vx).Float()
+	}
+
+	return sum
+}
