@@ -14,9 +14,7 @@ GroupBy(f, xs) Returns a mapping from return value of f to array of elements tha
 Include(x, xs) Returns whether x is in xs
 None(f, xs) Returns whether none of the elements in xs caused f to return true
 One(f, xs) Returns whether exactly one of the elements in xs caused f to return true
-Partition(f, xs) Returns two arrays, the first of which is where f returned true and the second where f returned false
 Take(f, xs) Retuns a all the elements of xs until f returns true
-Zip(A, B) Returns the result of interleaving A and B into a list
 Combination(xs, n) Returns all unique combinations of elements of xs with n elements
 Permutations(xs, n) Returns all unique ordering of combinations of elements of xs with n elements
 Compact(xs) Returns all elemenets of xs that aren't nil

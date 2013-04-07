@@ -282,3 +282,32 @@ func Zip(xs, ys interface{}) interface{} {
 
 	return zs.Interface()
 }
+
+// Partition has the parametric type
+//
+//  func Partition(f func(A) bool, xs []A) ([]A, []A)
+//
+// Partition returns the arrays corresonding to whether the result
+// of f returned true or false when called with an element of xs
+func Partition(f, xs interface{}) (interface{}, interface{}) {
+	chk := ty.Check(
+		new(func(func(ty.A) bool, []ty.A) ([]ty.A, []ty.A)),
+		f, xs)
+
+	vp, vxs, txs, tys := chk.Args[0], chk.Args[1], chk.Returns[0], chk.Returns[1]
+
+	xsLen := vxs.Len()
+	rxs := reflect.MakeSlice(txs, 0, xsLen)
+	rys := reflect.MakeSlice(tys, 0, xsLen)
+
+	for i := 0; i < xsLen; i++ {
+		vx := vxs.Index(i)
+		if call1(vp, vx).Bool() {
+			rxs = reflect.Append(rxs, vx)
+		} else {
+			rys = reflect.Append(rys, vx)
+		}
+	}
+
+	return rxs.Interface(), rys.Interface()
+}

@@ -90,6 +90,18 @@ func TestZip(t *testing.T) {
 	assertDeep(t, zipped, []string{"a", "1", "b", "2"})
 }
 
+func TestPartition(t *testing.T) {
+	a := []int{1, 2, 3, 4, 5}
+	even := func(i int) bool { return i%2 == 0 }
+	evens, odds := Partition(even, a)
+	assertDeep(t, evens, []int{2, 4})
+	assertDeep(t, odds, []int{1, 3, 5})
+
+	evens, odds := Partition(even, []int{})
+	assertDeep(t, evens, []int{})
+	assertDeep(t, odds, []int{})
+}
+
 func TestCopy(t *testing.T) {
 	orig := []int{1, 2, 3, 4, 5}
 	copied := Copy(orig).([]int)
