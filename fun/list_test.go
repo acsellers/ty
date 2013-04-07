@@ -16,6 +16,18 @@ func TestMap(t *testing.T) {
 	assertDeep(t, lens, []int{3, 2, 1})
 }
 
+func TestEach(t *testing.T) {
+	results := make([]string, 0)
+	greet := func(n string) { results = append(results, "Hey "+n) }
+	Each(greet, []string{"a", "b", "c"})
+
+	assertDeep(t, results, []string{"Hey a", "Hey b", "Hey c"})
+
+	results = make([]string, 0)
+	Each(greet, []string{})
+	assertDeep(t, []string{}, results)
+}
+
 func TestFilter(t *testing.T) {
 	even := func(x int) bool { return x%2 == 0 }
 	evens := Filter(even, []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}).([]int)

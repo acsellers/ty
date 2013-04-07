@@ -29,6 +29,23 @@ func Map(f, xs interface{}) interface{} {
 	return vys.Interface()
 }
 
+// Each has a parametric type:
+//
+//  func Each(f func(A), xs []A)
+//
+// Each runs `f` across each element in `xs`.
+func Each(f, xs interface{}) {
+	chk := ty.Check(
+		new(func(func(ty.A), []ty.A)),
+		f, xs)
+	vf, vxs := chk.Args[0], chk.Args[1]
+
+	xsLen := vxs.Len()
+	for i := 0; i < xsLen; i++ {
+		call(vf, vxs.Index(i))
+	}
+}
+
 // Filter has a parametric type:
 //
 //	func Filter(p func(A) bool, xs []A) []A
