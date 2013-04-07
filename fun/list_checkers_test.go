@@ -55,3 +55,15 @@ func TestNone(t *testing.T) {
 	none = None(even, []int{})
 	assertDeep(t, none, true)
 }
+
+func TestOne(t *testing.T) {
+	even := func(x int) bool { return x%2 == 0 }
+	none := One(even, []int{1, 2, 3})
+	assertDeep(t, none, true)
+
+	none = One(even, []int{1, 2, 4})
+	assertDeep(t, none, false)
+
+	none = One(even, []int{})
+	assertDeep(t, none, false)
+}

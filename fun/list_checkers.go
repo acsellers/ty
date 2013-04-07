@@ -106,3 +106,29 @@ func None(f, xs interface{}) bool {
 	}
 	return true
 }
+
+// One has a parametric type
+//
+//  func One(f func(A) bool, xs []A) bool
+//
+// One returns whether exactly one of the elements in xs
+// caused f to return true
+func One(f, xs interface{}) bool {
+	chk := ty.Check(
+		new(func(func(ty.A) bool, []ty.A)),
+		f, xs)
+	vp, vxs := chk.Args[0], chk.Args[1]
+
+	xsLen := vxs.Len()
+	first := false
+	for i := 0; i < xsLen; i++ {
+		if call1(vp, vxs.Index(i)).Bool() {
+			if first {
+				return false
+			} else {
+				first = true
+			}
+		}
+	}
+	return first
+}

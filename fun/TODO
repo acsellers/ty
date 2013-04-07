@@ -11,7 +11,6 @@ FindIndex(f, xs) Return the first index where f returns true, otherwise nil
 Grep(xs, regex) Returns the strings for which regex matches
 GroupBy(f, xs) Returns a mapping from return value of f to array of elements that were put in
 Include(x, xs) Returns whether x is in xs
-One(f, xs) Returns whether exactly one of the elements in xs caused f to return true
 Combination(xs, n) Returns all unique combinations of elements of xs with n elements
 Permutations(xs, n) Returns all unique ordering of combinations of elements of xs with n elements
 Compact(xs) Returns all elemenets of xs that aren't nil
