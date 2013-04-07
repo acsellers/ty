@@ -311,3 +311,56 @@ func Partition(f, xs interface{}) (interface{}, interface{}) {
 
 	return rxs.Interface(), rys.Interface()
 }
+
+// Drop has the parametric type:
+//
+//  func Drop(f func(A) bool, xs []A) []A
+//
+// Drop calls f on each element of xs until it returns true, then returns
+// that element and the remaining elements of xs
+func Drop(f, xs interface{}) interface{} {
+	chk := ty.Check(
+		new(func(func(ty.A) bool, []ty.A) []ty.A),
+		f, xs)
+	vp, vxs, txs := chk.Args[0], chk.Args[1], chk.Returns[0]
+
+	xsLen := vxs.Len()
+	vys := reflect.MakeSlice(txs, 0, xsLen)
+
+	found := false
+	for i := 0; i < xsLen; i++ {
+		vx := vxs.Index(i)
+		if found || call1(vp, vx).Bool() {
+			vys = reflect.Append(vys, vx)
+			found = true
+		}
+	}
+
+	return vys.Interface()
+}
+
+// Take has the parametric type:
+//
+//  func Take(f func(A) bool, xs []A) []A
+//
+// Take runs f on each element of xs, until f returns true when it
+// returns all elements up to the element of xs that f returned true for
+func Take(f, xs interface{}) interface{} {
+	chk := ty.Check(
+		new(func(func(ty.A) bool, []ty.A) []ty.A),
+		f, xs)
+	vp, vxs, txs := chk.Args[0], chk.Args[1], chk.Returns[0]
+
+	xsLen := vxs.Len()
+	vys := reflect.MakeSlice(txs, 0, xsLen)
+
+	for i := 0; i < xsLen; i++ {
+		vx := vxs.Index(i)
+		if call1(vp, vx).Bool() {
+			return vys.Interface()
+		}
+		vys = reflect.Append(vys, vx)
+	}
+
+	return vys.Interface()
+}

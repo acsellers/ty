@@ -97,9 +97,29 @@ func TestPartition(t *testing.T) {
 	assertDeep(t, evens, []int{2, 4})
 	assertDeep(t, odds, []int{1, 3, 5})
 
-	evens, odds := Partition(even, []int{})
+	evens, odds = Partition(even, []int{})
 	assertDeep(t, evens, []int{})
 	assertDeep(t, odds, []int{})
+}
+
+func TestDrop(t *testing.T) {
+	a := []int{1, 2, 3, 4, 5}
+	large := func(i int) bool { return i >= 4 }
+	largeInts := Drop(large, a)
+	assertDeep(t, largeInts, []int{4, 5})
+
+	b := Drop(large, []int{})
+	assertDeep(t, b, []int{})
+}
+
+func TestTake(t *testing.T) {
+	a := []int{1, 2, 3, 4, 5}
+	small := func(i int) bool { return i >= 4 }
+	smallInts := Take(small, a)
+	assertDeep(t, smallInts, []int{1, 2, 3})
+
+	b := Take(small, []int{})
+	assertDeep(t, b, []int{})
 }
 
 func TestCopy(t *testing.T) {
