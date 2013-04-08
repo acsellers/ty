@@ -73,6 +73,15 @@ func TestReverse(t *testing.T) {
 	assertDeep(t, reversed, []int{5, 4, 3, 2, 1})
 }
 
+func TestGroupBy(t *testing.T) {
+	square := func(n int) int { return n * n }
+	a := []int{-2, -1, 0, 1, 2}
+	m := GroupBy(square, a)
+	assertDeep(t, m, map[int][]int{4: []int{-2, 2}, 1: []int{-1, 1}, 0: []int{0}})
+
+	m = GroupBy(square, []int{})
+	assertDeep(t, m, map[int][]int{})
+}
 func TestZip(t *testing.T) {
 	a := []int{1, 3, 5}
 	b := []int{2, 4, 6}

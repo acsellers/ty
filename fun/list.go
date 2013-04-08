@@ -256,7 +256,34 @@ func Each(f, xs interface{}) {
 	}
 }
 
-// Zip has the parametric type
+// GroupBy has a parametric type
+//
+//  func GroupBy(f func(A) B, xs []A) map[B][]A
+//
+// GroupBy creates a map of return value of f to input element of xs
+func GroupBy(f, xs interface{}) interface{} {
+	chk := ty.Check(
+		new(func(func(ty.A) ty.B, []ty.A) map[ty.B][]ty.A),
+		f, xs)
+	vf, vxs, tys := chk.Args[0], chk.Args[1], chk.Returns[0]
+
+	xsLen := vxs.Len()
+	vym := reflect.MakeMap(tys)
+	for i := 0; i < xsLen; i++ {
+		vz := call1(vf, vxs.Index(i))
+		mi := vym.MapIndex(vz)
+		if !mi.IsValid() {
+			vym.SetMapIndex(vz, reflect.MakeSlice(vxs.Type(), 0, 1))
+			mi = vym.MapIndex(vz)
+		}
+
+		vym.SetMapIndex(vz, reflect.Append(mi, vxs.Index(i)))
+	}
+
+	return vym.Interface()
+}
+
+// Zip has a parametric type
 //
 //  func Zip(xs , ys []A) []A
 //
@@ -283,7 +310,7 @@ func Zip(xs, ys interface{}) interface{} {
 	return zs.Interface()
 }
 
-// Partition has the parametric type
+// Partition has a parametric type
 //
 //  func Partition(f func(A) bool, xs []A) ([]A, []A)
 //
@@ -312,7 +339,7 @@ func Partition(f, xs interface{}) (interface{}, interface{}) {
 	return rxs.Interface(), rys.Interface()
 }
 
-// Drop has the parametric type:
+// Drop has a parametric type:
 //
 //  func Drop(f func(A) bool, xs []A) []A
 //
@@ -339,7 +366,7 @@ func Drop(f, xs interface{}) interface{} {
 	return vys.Interface()
 }
 
-// Take has the parametric type:
+// Take has a parametric type:
 //
 //  func Take(f func(A) bool, xs []A) []A
 //
